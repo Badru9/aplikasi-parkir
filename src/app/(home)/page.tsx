@@ -13,7 +13,7 @@ export default function Home() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [listDataPegawai, setListDataPegawai] = useState<any[]>([]);
 
-  console.log(listDataPegawai);
+  // console.log(listDataPegawai);
 
   const getListPegawai = async () => {
     try {
