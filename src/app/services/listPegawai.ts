@@ -1,9 +1,13 @@
 import { axiosInstance } from "../lib/axiosInstance";
 
 export async function listPegawai() {
-  const response = await axiosInstance.get("/pegawai");
-  console.log(response);
-  if (response.status === 200) {
-    return response.data;
-  }
+  const APIVersion = "/api";
+
+  try {
+    const response = await axiosInstance.get("/api/pegawai");
+    console.log(response);
+    if (response.status === 200) {
+      return response.data.data;
+    }
+  } catch (error) {}
 }

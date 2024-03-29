@@ -4,12 +4,31 @@ import logo from "@/app/assets/logo.svg";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/app/components/Button";
 import Link from "next/link";
+import { listPegawai } from "@/app/services/listPegawai";
 
 export default function Home() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [listDataPegawai, setListDataPegawai] = useState<any[]>([]);
+
+  const getListPegawai = async () => {
+    try {
+      const response = await listPegawai();
+
+      setListDataPegawai(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const pegawaiUsername = listDataPegawai.map((item) => {
+    return item.username;
+  });
+  // const pegawaiPassword = listDataPegawai.map((item) => {
+  //   return item.password;
+  // });
 
   const formik = useFormik({
     initialValues: {
@@ -17,9 +36,25 @@ export default function Home() {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      const isUsername = pegawaiUsername.find((item) => {
+        return item === values.username;
+      });
+
+      // const isPassword = pegawaiPassword.find((item) => {
+      //   return item === values.password;
+      // });
+
+      if (!isUsername) {
+        console.log("Register Berhasil");
+      } else {
+        console.log("Register Gagal");
+      }
     },
   });
+
+  useEffect(() => {
+    getListPegawai();
+  }, []);
   return (
     <main className="flex min-h-screen flex-col items-center gap-20 p-20">
       <Image
@@ -52,7 +87,7 @@ export default function Home() {
             Password
           </label>
           <input
-            type={showPassword ? "password" : "text"}
+            type={!showPassword ? "password" : "text"}
             placeholder="Password"
             className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
             name="password"
@@ -65,9 +100,9 @@ export default function Home() {
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
-              <FaEye size={20} color="white" />
-            ) : (
               <FaEyeSlash size={20} color="white" />
+            ) : (
+              <FaEye size={20} color="white" />
             )}
           </button>
         </div>

@@ -25,13 +25,34 @@ export default function Home() {
     }
   };
 
+  console.log(listDataPegawai);
+
+  const pegawaiUsername = listDataPegawai.map((item) => {
+    return item.username;
+  });
+  const pegawaiPassword = listDataPegawai.map((item) => {
+    return item.password;
+  });
+
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
     },
     onSubmit: async (values) => {
-      console.log(values);
+      const isUsername = pegawaiUsername.find((item) => {
+        return item === values.username;
+      });
+
+      const isPassword = pegawaiPassword.find((item) => {
+        return item === values.password;
+      });
+
+      if (isUsername && isPassword) {
+        console.log("Login Berhasil");
+      } else {
+        console.log("Login Gagal");
+      }
     },
   });
 
@@ -70,7 +91,7 @@ export default function Home() {
             Password
           </label>
           <input
-            type={showPassword ? "password" : "text"}
+            type={!showPassword ? "password" : "text"}
             placeholder="Password"
             className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
             name="password"
@@ -83,9 +104,9 @@ export default function Home() {
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
-              <FaEye size={20} color="white" />
-            ) : (
               <FaEyeSlash size={20} color="white" />
+            ) : (
+              <FaEye size={20} color="white" />
             )}
           </button>
         </div>
