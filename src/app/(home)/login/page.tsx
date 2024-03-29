@@ -5,20 +5,19 @@ import Image from "next/image";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import Button from "@/app/components/Button";
+import Button from "../../components/Button";
 import Link from "next/link";
-import { createPegawai, listPegawai } from "@/app/services/pegawai";
-import Toast from "@/app/components/Toast";
-import { useRouter } from "next/navigation";
+import { listPegawai } from "../../services/pegawai";
+import Toast from "../../components/Toast";
 
-export default function Register() {
+export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [listDataPegawai, setListDataPegawai] = useState<any[]>([]);
   const [toastState, setToastState] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
 
-  const router = useRouter();
+  // console.log(listDataPegawai);
 
   const getListPegawai = async () => {
     try {
@@ -30,55 +29,42 @@ export default function Register() {
     }
   };
 
+  console.log(listDataPegawai);
+
   const pegawaiUsername = listDataPegawai?.map((item) => {
     return item.username;
   });
-  // const pegawaiPassword = listDataPegawai.map((item) => {
-  //   return item.password;
-  // });
+  const pegawaiPassword = listDataPegawai?.map((item) => {
+    return item.password;
+  });
 
   const formik = useFormik({
     initialValues: {
-      nama: "",
-      alamat: "",
-      tanggal_lahir: "",
       username: "",
       password: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const isUsername = pegawaiUsername.find((item) => {
         return item === values.username;
       });
 
-      const handleCreate = async () => {
-        const data = {
-          nama: values.nama,
-          alamat: values.alamat,
-          tanggal_lahir: values.tanggal_lahir,
-          username: values.username,
-          password: values.password,
-        };
-        try {
-          await createPegawai(data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+      const isPassword = pegawaiPassword.find((item) => {
+        return item === values.password;
+      });
 
-      // const isPassword = pegawaiPassword.find((item) => {
-      //   return item === values.password;
-      // });
-
-      if (!isUsername) {
+      if (isUsername && isPassword) {
         setIsLoginSuccess(true);
-        setText("Register Berhasil");
-        handleCreate();
+        setText("Login Berhasil");
+        console.log("Login Berhasil");
+      } else if (values.username === "" || values.password === "") {
+        setText("Username / Password Tidak Boleh Kosong");
+        setIsLoginSuccess(false);
       } else {
         setIsLoginSuccess(false);
-        setText("Akun sudah terdaftar");
+        setText("Login Gagal");
+        console.log("Login Gagal");
       }
       setToastState(true);
-      router.push("/");
     },
   });
 
@@ -108,20 +94,6 @@ export default function Register() {
       >
         <div className="flex flex-col gap-3 w-1/2 px-20">
           <label className="text-2xl text-primary font-semibold">
-            Nama Lengkap
-          </label>
-          <input
-            type="text"
-            placeholder="Nama Lengkap"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
-            name="nama"
-            onChange={formik.handleChange}
-            value={formik.values.nama}
-            autoFocus
-          />
-        </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
             Username
           </label>
           <input
@@ -131,34 +103,6 @@ export default function Register() {
             name="username"
             onChange={formik.handleChange}
             value={formik.values.username}
-            autoFocus
-          />
-        </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
-            Alamat Lengkap
-          </label>
-          <input
-            type="text"
-            placeholder="Alamat Lengkap"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
-            name="alamat"
-            onChange={formik.handleChange}
-            value={formik.values.alamat}
-            autoFocus
-          />
-        </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
-            Tanggal Lahir
-          </label>
-          <input
-            type="text"
-            placeholder="Tanggal Lahir"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
-            name="tanggal_lahir"
-            onChange={formik.handleChange}
-            value={formik.values.tanggal_lahir}
             autoFocus
           />
         </div>
@@ -186,16 +130,21 @@ export default function Register() {
             )}
           </button>
         </div>
-
-        <div className="text-xl font-medium mt-5">
-          <p>
-            Already have an account?{" "}
-            <Link href={"/"} className="font-semibold underline">
-              Login
+        <div className="text-xl font-medium mt-5 flex flex-col w-1/2 px-20">
+          <Link
+            href={"/forgot-password"}
+            className="self-end hover:underline hover:font-medium"
+          >
+            Forgot Password?
+          </Link>
+          <p className="self-center">
+            Doesn't have an account?{" "}
+            <Link href={"/register"} className="font-semibold underline">
+              Register
             </Link>
           </p>
         </div>
-        <Button children="Register" type="submit" />
+        <Button children="Login" type="submit" />
       </form>
     </main>
   );

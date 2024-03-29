@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { listUsers } from "../services/listUsers";
+import { listUsers } from "../services/users";
 import { useEffect, useState } from "react";
 
 export default function Home() {
