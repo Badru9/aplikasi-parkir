@@ -9,15 +9,20 @@ import Button from "../../components/Button";
 import Link from "next/link";
 import { listPegawai } from "../../services/pegawai";
 import Toast from "../../components/Toast";
+import Loading from "@/app/components/Loading";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [listDataPegawai, setListDataPegawai] = useState<any[]>([]);
   const [toastState, setToastState] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
 
   // console.log(listDataPegawai);
+
+  const router = useRouter();
 
   const getListPegawai = async () => {
     try {
@@ -45,15 +50,18 @@ export default function Login() {
     },
     onSubmit: async (values) => {
       const isUsername = pegawaiUsername.find((item) => {
+        console.log(item);
         return item === values.username;
       });
 
       const isPassword = pegawaiPassword.find((item) => {
+        console.log(item);
         return item === values.password;
       });
 
       if (isUsername && isPassword) {
         setIsLoginSuccess(true);
+        setLoading(true);
         setText("Login Berhasil");
         console.log("Login Berhasil");
       } else if (values.username === "" || values.password === "") {
@@ -65,6 +73,11 @@ export default function Login() {
         console.log("Login Gagal");
       }
       setToastState(true);
+      setTimeout(() => {
+        setLoading(false);
+        setToastState(false);
+        router.push("/main-app");
+      }, 2000);
     },
   });
 
@@ -144,7 +157,7 @@ export default function Login() {
             </Link>
           </p>
         </div>
-        <Button children="Login" type="submit" />
+        {loading ? <Loading /> : <Button children="Login" type="submit" />}
       </form>
     </main>
   );

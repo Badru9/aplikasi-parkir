@@ -10,12 +10,14 @@ import Link from "next/link";
 import { createPegawai, listPegawai } from "@/app/services/pegawai";
 import Toast from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/components/Loading";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [listDataPegawai, setListDataPegawai] = useState<any[]>([]);
   const [toastState, setToastState] = useState<boolean>(false);
-  const [isLoginSuccess, setIsLoginSuccess] = useState<boolean>(false);
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
 
   const router = useRouter();
@@ -33,13 +35,11 @@ export default function Register() {
   const pegawaiUsername = listDataPegawai?.map((item) => {
     return item.username;
   });
-  // const pegawaiPassword = listDataPegawai.map((item) => {
-  //   return item.password;
-  // });
 
   const formik = useFormik({
     initialValues: {
       nama: "",
+      email: "",
       alamat: "",
       tanggal_lahir: "",
       username: "",
@@ -50,31 +50,46 @@ export default function Register() {
         return item === values.username;
       });
 
+      if (
+        values.nama === "" ||
+        values.email === "" ||
+        values.alamat === "" ||
+        values.tanggal_lahir === "" ||
+        values.username === "" ||
+        values.password === ""
+      ) {
+        setToastState(true);
+        setIsRegisterSuccess(false);
+        setText("Data tidak boleh kosong");
+        return;
+      }
+
       const handleCreate = async () => {
         const data = {
           nama: values.nama,
           alamat: values.alamat,
+          email: values.email,
           tanggal_lahir: values.tanggal_lahir,
           username: values.username,
           password: values.password,
         };
         try {
+          setLoading(true);
           await createPegawai(data);
+          setTimeout(() => {
+            setLoading(false);
+          }, 2000);
         } catch (error) {
           console.log(error);
         }
       };
 
-      // const isPassword = pegawaiPassword.find((item) => {
-      //   return item === values.password;
-      // });
-
       if (!isUsername) {
-        setIsLoginSuccess(true);
+        setIsRegisterSuccess(true);
         setText("Register Berhasil");
         handleCreate();
       } else {
-        setIsLoginSuccess(false);
+        setIsRegisterSuccess(false);
         setText("Akun sudah terdaftar");
       }
       setToastState(true);
@@ -90,7 +105,7 @@ export default function Register() {
       {toastState && (
         <Toast
           text={text}
-          state={isLoginSuccess}
+          state={isRegisterSuccess}
           onClose={() => setToastState(false)}
           onShow={toastState}
         />
@@ -104,7 +119,7 @@ export default function Register() {
       />
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col w-full h-[600px] gap-10 items-center justify-center rounded-[50px]"
+        className="flex flex-col w-full min-h-[600px] gap-10 items-center justify-center rounded-[50px]"
       >
         <div className="flex flex-col gap-3 w-1/2 px-20">
           <label className="text-2xl text-primary font-semibold">
@@ -121,6 +136,17 @@ export default function Register() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
+          <label className="text-2xl text-primary font-semibold">Email</label>
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+        </div>
+        <div className="flex flex-col gap-3 w-1/2 px-20">
           <label className="text-2xl text-primary font-semibold">
             Username
           </label>
@@ -131,7 +157,6 @@ export default function Register() {
             name="username"
             onChange={formik.handleChange}
             value={formik.values.username}
-            autoFocus
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
@@ -145,7 +170,6 @@ export default function Register() {
             name="alamat"
             onChange={formik.handleChange}
             value={formik.values.alamat}
-            autoFocus
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
@@ -159,7 +183,6 @@ export default function Register() {
             name="tanggal_lahir"
             onChange={formik.handleChange}
             value={formik.values.tanggal_lahir}
-            autoFocus
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20 relative">
@@ -190,12 +213,13 @@ export default function Register() {
         <div className="text-xl font-medium mt-5">
           <p>
             Already have an account?{" "}
-            <Link href={"/"} className="font-semibold underline">
+            <Link href={"/login"} className="font-semibold underline">
               Login
             </Link>
           </p>
         </div>
-        <Button children="Register" type="submit" />
+
+        {loading ? <Loading /> : <Button children="Register" type="submit" />}
       </form>
     </main>
   );
