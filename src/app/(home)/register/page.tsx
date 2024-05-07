@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/app/assets/logo.svg";
+import logo from "@/../public/logo.svg";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -115,14 +115,14 @@ export default function Register() {
         alt="logo"
         width={1000}
         height={1000}
-        className="w-80"
+        className="w-40"
       />
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-full min-h-[600px] gap-10 items-center justify-center rounded-[50px]"
       >
         <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Nama Lengkap
           </label>
           <input
@@ -136,7 +136,9 @@ export default function Register() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">Email</label>
+          <label className="text-2xl text-lightBlack font-semibold">
+            Email
+          </label>
           <input
             type="email"
             placeholder="Email"
@@ -147,7 +149,7 @@ export default function Register() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Username
           </label>
           <input
@@ -160,7 +162,7 @@ export default function Register() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Alamat Lengkap
           </label>
           <input
@@ -173,7 +175,7 @@ export default function Register() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Tanggal Lahir
           </label>
           <input
@@ -186,7 +188,7 @@ export default function Register() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20 relative">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Password
           </label>
           <input

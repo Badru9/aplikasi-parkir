@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/app/assets/logo.svg";
+import logo from "@/../public/logo.svg";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -85,7 +85,7 @@ export default function Login() {
     getListPegawai();
   }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center gap-20 p-20 relative">
+    <main className="flex h-screen flex-col items-center gap-10 py-40 relative overflow-y-hidden">
       {toastState && (
         <Toast
           text={text}
@@ -99,14 +99,14 @@ export default function Login() {
         alt="logo"
         width={1000}
         height={1000}
-        className="w-80"
+        className="w-40"
       />
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-full h-[600px] gap-10 items-center justify-center rounded-[50px]"
       >
         <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Username
           </label>
           <input
@@ -120,7 +120,7 @@ export default function Login() {
           />
         </div>
         <div className="flex flex-col gap-3 w-1/2 px-20 relative">
-          <label className="text-2xl text-primary font-semibold">
+          <label className="text-2xl text-lightBlack font-semibold">
             Password
           </label>
           <input

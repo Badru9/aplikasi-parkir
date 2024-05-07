@@ -7,6 +7,7 @@ import { id } from "date-fns/locale";
 
 interface TableCustomersProps {
   index: number;
+  ID: any;
   plat_no: string;
   jam_masuk: string;
   jam_keluar: string;
@@ -15,24 +16,27 @@ interface TableCustomersProps {
 
 export default function TableCustomers({
   index,
+  ID,
   plat_no,
   jam_masuk,
   jam_keluar,
   biaya,
 }: TableCustomersProps) {
   const getTime = (jam_masuk: string, jam_keluar: string) => {
-    console.log(jam_masuk);
-    console.log(jam_keluar);
-    const result = differenceInHours(jam_keluar, jam_masuk);
-    console.log(result);
+    if (jam_keluar) {
+      const result = differenceInHours(jam_keluar, jam_masuk);
+      console.log(result);
 
-    let biaya: number = 2000;
+      let biaya: number = 2000;
 
-    if (result > 1) {
-      return (biaya *= result);
+      if (result > 1) {
+        return (biaya *= result);
+      }
+
+      return biaya;
     }
 
-    return biaya;
+    console.log(jam_keluar);
   };
 
   //   const waktu_masuk = format(jam_masuk, "yyyy-MM-dd HH:mm", { locale: id });
@@ -54,10 +58,12 @@ export default function TableCustomers({
 
   const biayaParkir = getTime(waktu_masuk, waktu_keluar);
 
+  console.log(biayaParkir);
+
   const insertBiayaByPlatNo = async () => {
     const data = {
-      id: 5,
-      biaya: 10000,
+      plat_no: "Z 1234 MB",
+      biaya: biayaParkir,
     };
 
     try {
@@ -71,6 +77,7 @@ export default function TableCustomers({
   return (
     <tr onClick={() => insertBiayaByPlatNo()}>
       <td className="pb-1 pt-3">{index}</td>
+      <td className="pb-1 pt-3">{ID}</td>
       <td className="pb-1 pt-3">{plat_no}</td>
       <td className="pb-1 pt-3">{jam_masuk}</td>
       <td className="pb-1 pt-3">{jam_keluar}</td>

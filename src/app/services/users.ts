@@ -20,3 +20,13 @@ export async function insertBiaya(data: any) {
     return response.data;
   }
 }
+
+export async function insertCustomer(data: any) {
+  const response = await axiosInstance.post("/api/customers", data);
+
+  console.log(data);
+
+  if (response.status === 201) {
+    return response.data;
+  }
+}

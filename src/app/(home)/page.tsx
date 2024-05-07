@@ -2,14 +2,20 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
+import Image from "next/image";
+import logo from "@/../public/logo.svg";
 
 export default function Home() {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     setTimeout(() => {
       router.push("/login");
+      setLoading(false);
     }, 3000);
   }, []);
 
@@ -18,9 +24,10 @@ export default function Home() {
       initial={{ opacity: 0, y: -500 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, easings: "easeInOut" }}
-      className="w-full min-h-screen flex items-center justify-center"
+      className="w-full min-h-screen flex flex-col gap-5 items-center justify-center"
     >
-      <h1 className="text-4xl font-semibold">Welcome to our Parking App</h1>
+      <Image src={logo} alt="logo" width={500} height={500} className="w-28" />
+      {loading && <Loading />}
     </motion.main>
   );
 }
