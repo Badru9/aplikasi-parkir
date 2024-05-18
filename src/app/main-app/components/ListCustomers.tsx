@@ -9,8 +9,8 @@ interface TableCustomersProps {
   index: number;
   ID: any;
   plat_no: string;
-  jam_masuk: string;
-  jam_keluar: string;
+  jam_masuk: any;
+  jam_keluar: any;
   biaya: string;
 }
 
@@ -22,65 +22,74 @@ export default function TableCustomers({
   jam_keluar,
   biaya,
 }: TableCustomersProps) {
-  const getTime = (jam_masuk: string, jam_keluar: string) => {
-    if (jam_keluar) {
-      const result = differenceInHours(jam_keluar, jam_masuk);
-      console.log(result);
+  // const getTime = (jam_masuk: string, jam_keluar: string) => {
+  //   if (jam_keluar) {
+  //     const result = differenceInHours(jam_keluar, jam_masuk);
+  //     console.log(result);
 
-      let biaya: number = 2000;
+  //     let biaya: number = 2000;
 
-      if (result > 1) {
-        return (biaya *= result);
-      }
+  //     if (result > 1) {
+  //       return (biaya *= result);
+  //     }
 
-      return biaya;
-    }
+  //     return biaya;
+  //   } else {
+  //     console.log("error");
+  //   }
 
-    console.log(jam_keluar);
-  };
+  //   console.log(jam_keluar);
+  // };
 
-  //   const waktu_masuk = format(jam_masuk, "yyyy-MM-dd HH:mm", { locale: id });
-  //   const waktu_keluar = format(jam_keluar, "yyyy-MM-dd HH:mm", { locale: id });
+  // //   const waktu_masuk = format(jam_masuk, "yyyy-MM-dd HH:mm", { locale: id });
+  // //   const waktu_keluar = format(jam_keluar, "yyyy-MM-dd HH:mm", { locale: id });
 
-  //   console.log(waktu_masuk);
-  //   console.log(waktu_keluar);
+  // //   console.log(waktu_masuk);
+  // //   console.log(waktu_keluar);
 
-  //   const today = new Date();
-  //   const waktu_masuk = format(today, "yyyy-MM-dd HH:mm", { locale: id });
-  //   const waktu_keluar = format(
-  //     today.setDate(today.getDate() + 1),
-  //     "yyyy-MM-dd HH:mm",
-  //     { locale: id }
-  //   );
+  // //   const today = new Date();
+  // //   const waktu_masuk = format(today, "yyyy-MM-dd HH:mm", { locale: id });
+  // //   const waktu_keluar = format(
+  // //     today.setDate(today.getDate() + 1),
+  // //     "yyyy-MM-dd HH:mm",
+  // //     { locale: id }
+  // //   );
 
-  const waktu_masuk = format(jam_masuk, "yyyy-MM-dd HH:mm", { locale: id });
-  const waktu_keluar = format(jam_keluar, "yyyy-MM-dd HH:mm", { locale: id });
+  // console.log(jam_masuk);
+  // console.log(jam_keluar);
 
-  const biayaParkir = getTime(waktu_masuk, waktu_keluar);
+  // const waktu_masuk = format(jam_masuk, "yyyy-MM-dd HH:mm", { locale: id });
+  // const waktu_keluar = format(jam_keluar || new Date(), "yyyy-MM-dd HH:mm", {
+  //   locale: id,
+  // });
 
-  console.log(biayaParkir);
+  // const biayaParkir = getTime(waktu_masuk, waktu_keluar);
 
-  const insertBiayaByPlatNo = async () => {
-    const data = {
-      plat_no: "Z 1234 MB",
-      biaya: biayaParkir,
-    };
+  // console.log(biayaParkir);
 
-    try {
-      const response = await insertBiaya(data);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const insertBiayaByPlatNo = async () => {
+  //   const data = {
+  //     plat_no: "D 1234 RT",
+  //     biaya: biayaParkir,
+  //   };
+
+  //   try {
+  //     const response = await insertBiaya(data);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
-    <tr onClick={() => insertBiayaByPlatNo()}>
+    <tr>
       <td className="pb-1 pt-3">{index}</td>
       <td className="pb-1 pt-3">{ID}</td>
       <td className="pb-1 pt-3">{plat_no}</td>
       <td className="pb-1 pt-3">{jam_masuk}</td>
-      <td className="pb-1 pt-3">{jam_keluar}</td>
+      <td className="pb-1 pt-3">
+        {jam_keluar === undefined ? "NULL" : jam_keluar}
+      </td>
       <td className="pb-1 pt-3">{biaya}</td>
     </tr>
   );

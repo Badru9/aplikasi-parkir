@@ -2,13 +2,19 @@ import { axiosInstance } from "../lib/axiosInstance";
 
 export async function listUsers() {
   const response = await axiosInstance.get("/api/customers");
+
   if (response.status === 200) {
     return response.data;
   }
 }
 
-export async function getUserByPlatNo(plat_no: string) {
-  const response = await axiosInstance.get(`/api/customers/${plat_no}`);
+export async function getUserByPlatNo(data: any) {
+  const response = await axiosInstance.get(`/api/customers/${data.plat_no}`);
+
+  console.log(data);
+
+  console.log(response);
+
   if (response.status === 200) {
     return response.data;
   }

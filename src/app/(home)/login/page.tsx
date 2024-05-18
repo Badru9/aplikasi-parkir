@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/../public/logo.svg";
+import logo from "@/../public/logo-new.svg";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -55,7 +55,6 @@ export default function Login() {
       });
 
       const isPassword = pegawaiPassword.find((item) => {
-        console.log(item);
         return item === values.password;
       });
 
@@ -63,6 +62,7 @@ export default function Login() {
         setIsLoginSuccess(true);
         setLoading(true);
         setText("Login Berhasil");
+        router.push("/main-app");
         console.log("Login Berhasil");
       } else if (values.username === "" || values.password === "") {
         setText("Username / Password Tidak Boleh Kosong");

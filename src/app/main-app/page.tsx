@@ -8,7 +8,8 @@ import { FormatNumeric } from "@/app/components/FormatNumeric";
 import { format, differenceInHours } from "date-fns";
 import { id } from "date-fns/locale";
 import { useState } from "react";
-import FormCustomers from "./components/FormCustomers";
+import VehicleEntryForm from "./components/VehicleEntryForm";
+import ExitVehicleForm from "./components/ExitVehicleForm";
 
 export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
@@ -26,9 +27,9 @@ export default function Main() {
   const formatDate = (data: any) => {
     if (data) {
       return format(data, "yyyy-MM-dd HH:mm", { locale: id });
+    } else {
+      console.log(data);
     }
-
-    console.log(data);
   };
 
   useEffect(() => {
@@ -65,8 +66,9 @@ export default function Main() {
             </tbody>
           </table>
         </div>
-        <div className="w-1/2 p-8 ">
-          <FormCustomers />
+        <div className="w-1/2 gap-10 flex flex-col ">
+          <VehicleEntryForm />
+          <ExitVehicleForm />
         </div>
       </div>
     </main>

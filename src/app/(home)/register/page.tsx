@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/../public/logo.svg";
+import logo from "@/../public/logo-new.svg";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -93,7 +93,7 @@ export default function Register() {
         setText("Akun sudah terdaftar");
       }
       setToastState(true);
-      router.push("/");
+      router.push("/main-app");
     },
   });
 
