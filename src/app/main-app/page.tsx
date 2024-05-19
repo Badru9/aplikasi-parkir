@@ -10,9 +10,12 @@ import { id } from "date-fns/locale";
 import { useState } from "react";
 import VehicleEntryForm from "./components/VehicleEntryForm";
 import ExitVehicleForm from "./components/ExitVehicleForm";
+import Ticket from "./components/Ticket";
 
 export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
+  const [vehicleOut, setVehicleOut] = useState<boolean>(false);
+  const [platNo, setPlatNo] = useState<string>("");
 
   const fetchCustomers = async () => {
     try {
@@ -32,14 +35,25 @@ export default function Main() {
     }
   };
 
+  const showTicket = (plat_no: string) => {
+    console.log("Bisa");
+    console.log(plat_no);
+    setPlatNo(plat_no);
+    setVehicleOut(true);
+  };
+
   useEffect(() => {
     fetchCustomers();
   }, []);
   return (
-    <main className="flex min-h-screen flex-col bg-white items-center justify-between relative p-10">
+    <main className="flex min-h-screen w-full flex-col bg-lightGrey items-center justify-between relative p-10">
       <Sidebar />
-      <div className="flex w-full pl-40 py-10 text-xl gap-x-10">
-        <div className="p-8 bg-primary text-white rounded-2xl w-1/2">
+      <div className="flex lg:flex-col w-full pl-40 py-10 text-xl gap-10">
+        <div className="gap-10 flex flex-col lg:flex-row w-full">
+          <VehicleEntryForm />
+          <ExitVehicleForm onSubmit={(plat_no) => showTicket(plat_no)} />
+        </div>
+        <div className="p-8 bg-primary text-white rounded-2xl w-1/2 lg:w-full">
           <table className="w-full">
             <thead>
               <tr className="border-y border-white">
@@ -60,17 +74,14 @@ export default function Main() {
                   plat_no={data.plat_no}
                   jam_masuk={formatDate(data.jam_masuk)}
                   jam_keluar={formatDate(data.jam_keluar)}
-                  biaya={FormatNumeric(data.biaya)}
+                  biaya={data.biaya}
                 />
               ))}
             </tbody>
           </table>
         </div>
-        <div className="w-1/2 gap-10 flex flex-col ">
-          <VehicleEntryForm />
-          <ExitVehicleForm />
-        </div>
       </div>
+      {vehicleOut && <Ticket plat_no={platNo} />}
     </main>
   );
 }

@@ -25,7 +25,7 @@ export default function Home() {
       initial={{ opacity: 0, y: -500 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, easings: "easeInOut" }}
-      className="w-full min-h-screen flex flex-col gap-20 items-center justify-center"
+      className="w-full min-h-screen flex flex-col gap-20 items-center justify-center bg-lightGrey"
     >
       {loading ? (
         <Loading />
@@ -40,10 +40,10 @@ export default function Home() {
           />
           <div className="flex gap-5">
             <Link href={"/register"}>
-              <Button children="Register" />
+              <Button>Register</Button>
             </Link>
             <Link href={"/login"}>
-              <Button children="Login" />
+              <Button>Login</Button>
             </Link>
           </div>
         </>

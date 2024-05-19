@@ -85,7 +85,7 @@ export default function Login() {
     getListPegawai();
   }, []);
   return (
-    <main className="flex h-screen flex-col items-center gap-10 py-40 relative overflow-y-hidden">
+    <main className="flex min-h-screen flex-col items-center gap-10 py-40 relative  bg-lightGrey text-lightBlack">
       {toastState && (
         <Toast
           text={text}
@@ -157,7 +157,7 @@ export default function Login() {
             </Link>
           </p>
         </div>
-        {loading ? <Loading /> : <Button children="Login" type="submit" />}
+        {loading ? <Loading /> : <Button type="submit">Login</Button>}
       </form>
     </main>
   );

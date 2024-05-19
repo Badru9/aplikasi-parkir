@@ -15,14 +15,14 @@ export async function getUserByPlatNo(data: any) {
 
   console.log(response);
 
-  if (response.status === 200) {
+  if (response) {
     return response.data;
   }
 }
 
 export async function insertBiaya(data: any) {
   const response = await axiosInstance.put(`/api/customers`, data);
-  if (response.status === 201) {
+  if (response) {
     return response.data;
   }
 }
@@ -31,8 +31,7 @@ export async function insertCustomer(data: any) {
   const response = await axiosInstance.post("/api/customers", data);
 
   console.log(data);
-
-  if (response.status === 201) {
+  if (response) {
     return response.data;
   }
 }

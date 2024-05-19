@@ -221,7 +221,7 @@ export default function Register() {
           </p>
         </div>
 
-        {loading ? <Loading /> : <Button children="Register" type="submit" />}
+        {loading ? <Loading /> : <Button type="submit">Register</Button>}
       </form>
     </main>
   );

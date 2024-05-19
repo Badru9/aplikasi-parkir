@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={urbanist.className}>{children}</body>
+      <body className={`bg-lightGrey ${urbanist.className}`}>{children}</body>
     </html>
   );
 }

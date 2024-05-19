@@ -1,13 +1,13 @@
 export interface Vehicle {
-  id: number;
+  id?: number;
   plat_no: string;
   jam_masuk: string;
-  jam_keluar: string;
-  biaya: number;
+  jam_keluar?: string;
+  biaya?: number;
 }
 
 export interface Pegawai {
-  id: number;
+  id?: number;
   name: string;
   alamat: string;
   username: string;

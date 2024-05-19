@@ -5,10 +5,16 @@ import { getUserByPlatNo, insertBiaya, listUsers } from "@/app/services/users";
 import { differenceInHours, format } from "date-fns";
 import { id } from "date-fns/locale";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function ExitVehicleForm(isSuccess: any) {
-  // TODO : Ketika insert biaya berhasil, fetch data customer kembali
+interface ExitVehicleFormProps {
+  onSubmit: (plat_no: string) => void;
+}
+
+export default function ExitVehicleForm({ onSubmit }: ExitVehicleFormProps) {
   const [customer, setCustomer] = useState<any[]>([]);
+
+  const router = useRouter();
 
   const today = new Date();
   const now = format(today, "yyyy-MM-dd HH:mm", { locale: id });
@@ -72,22 +78,23 @@ export default function ExitVehicleForm(isSuccess: any) {
         try {
           await insertBiaya(data);
           fetchCustomers();
-          if (window !== undefined) {
-            window.location.reload();
-          }
+          onSubmit(values.platNo);
+          // if (window !== undefined) {
+          //   window.location.reload();
+          // }
         } catch (error) {
           console.log(error);
         }
       }
 
-      //   formik.resetForm();
+      formik.resetForm();
     },
   });
 
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="space-y-4 bg-primary p-8 rounded-2xl"
+      className="space-y-4 w-full bg-primary p-8 rounded-2xl"
     >
       <h1 className="text-white text-2xl font-semibold">
         Form Kendaraan Keluar
@@ -105,7 +112,7 @@ export default function ExitVehicleForm(isSuccess: any) {
           id="platNo"
           value={formik.values.platNo}
           onChange={formik.handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl text-primary"
           required
         />
       </div>
