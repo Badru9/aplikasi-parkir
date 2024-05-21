@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface ExitVehicleFormProps {
-  onSubmit: (plat_no: string) => void;
+  onSubmit: (data: string) => void;
 }
 
 export default function ExitVehicleForm({ onSubmit }: ExitVehicleFormProps) {
@@ -78,7 +78,10 @@ export default function ExitVehicleForm({ onSubmit }: ExitVehicleFormProps) {
         try {
           await insertBiaya(data);
           fetchCustomers();
-          onSubmit(values.platNo);
+
+          const response = await getUserByPlatNo({ plat_no: values.platNo });
+
+          onSubmit(response.data);
           // if (window !== undefined) {
           //   window.location.reload();
           // }

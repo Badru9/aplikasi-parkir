@@ -15,7 +15,7 @@ import Ticket from "./components/Ticket";
 export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [vehicleOut, setVehicleOut] = useState<boolean>(false);
-  const [platNo, setPlatNo] = useState<string>("");
+  const [dataCustomer, setDataCustomer] = useState<string>("");
 
   const fetchCustomers = async () => {
     try {
@@ -35,10 +35,10 @@ export default function Main() {
     }
   };
 
-  const showTicket = (plat_no: string) => {
+  const showTicket = (data: any) => {
     console.log("Bisa");
-    console.log(plat_no);
-    setPlatNo(plat_no);
+    console.log(data);
+    setDataCustomer(data);
     setVehicleOut(true);
   };
 
@@ -51,7 +51,7 @@ export default function Main() {
       <div className="flex lg:flex-col w-full pl-40 py-10 text-xl gap-10">
         <div className="gap-10 flex flex-col lg:flex-row w-full">
           <VehicleEntryForm />
-          <ExitVehicleForm onSubmit={(plat_no) => showTicket(plat_no)} />
+          <ExitVehicleForm onSubmit={(data) => showTicket(data)} />
         </div>
         <div className="p-8 bg-primary text-white rounded-2xl w-1/2 lg:w-full">
           <table className="w-full">
@@ -81,7 +81,7 @@ export default function Main() {
           </table>
         </div>
       </div>
-      {vehicleOut && <Ticket plat_no={platNo} />}
+      {vehicleOut && <Ticket data={dataCustomer} />}
     </main>
   );
 }

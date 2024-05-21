@@ -28,7 +28,7 @@ export default function Home() {
       className="w-full min-h-screen flex flex-col gap-20 items-center justify-center bg-lightGrey"
     >
       {loading ? (
-        <Loading />
+        <Loading color="black" />
       ) : (
         <>
           <Image
