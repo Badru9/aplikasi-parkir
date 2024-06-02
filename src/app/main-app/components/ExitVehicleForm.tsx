@@ -66,13 +66,6 @@ export default function ExitVehicleForm() {
         window.snap.pay(response.data.token);
       }
     }
-    // const response = await fetch("/api/tokenizer", {
-    //   method: "POST",
-    //   body: JSON.stringify(midtransData),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
 
     // if (response.ok) {
     //   const result = await response.json();
@@ -130,7 +123,7 @@ export default function ExitVehicleForm() {
         }
       }
 
-      formik.resetForm();
+      // formik.resetForm();
     },
   });
 

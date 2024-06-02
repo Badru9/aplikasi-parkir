@@ -31,7 +31,9 @@ export default function TableCustomers({
       <td className="pb-1 pt-3">
         {jam_keluar === undefined ? "NULL" : jam_keluar}
       </td>
-      <td className="pb-1 pt-3">{biaya.replace(",00", "")}</td>
+      <td className="pb-1 pt-3">
+        <FormatNumeric value={Number(biaya)} />
+      </td>
     </tr>
   );
 }

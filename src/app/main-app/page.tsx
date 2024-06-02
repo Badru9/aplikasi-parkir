@@ -11,6 +11,7 @@ import { useState } from "react";
 import VehicleEntryForm from "./components/VehicleEntryForm";
 import ExitVehicleForm from "./components/ExitVehicleForm";
 import Cookies from "js-cookie";
+import Ticket from "./components/Ticket";
 
 export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
@@ -63,7 +64,7 @@ export default function Main() {
       <div className="flex lg:flex-col w-full pl-40 py-10 text-xl gap-10">
         <div className="gap-10 flex flex-col lg:flex-row w-full">
           <VehicleEntryForm />
-          <ExitVehicleForm onSubmit={(data) => showTicket(data)} />
+          <ExitVehicleForm />
         </div>
         <div className="p-8 bg-primary text-white rounded-2xl w-1/2 lg:w-full">
           <table className="w-full">
