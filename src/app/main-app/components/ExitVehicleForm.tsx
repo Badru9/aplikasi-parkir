@@ -4,11 +4,14 @@ import { useFormik } from "formik";
 import { getUserByPlatNo, insertBiaya, listUsers } from "@/app/services/users";
 import { differenceInHours, format } from "date-fns";
 import { id } from "date-fns/locale";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { createTransaction } from "@/app/services/midtrans";
 
-export default function ExitVehicleForm(isSuccess: any) {
+export default function ExitVehicleForm() {
   // TODO : Ketika insert biaya berhasil, fetch data customer kembali
   const [customer, setCustomer] = useState<any[]>([]);
+  const [inPayment, setInPayment] = useState<boolean>(false);
 
   const today = new Date();
   const now = format(today, "yyyy-MM-dd HH:mm", { locale: id });
@@ -16,7 +19,6 @@ export default function ExitVehicleForm(isSuccess: any) {
   const fetchCustomers = async () => {
     try {
       const response = await listUsers();
-      console.log(response);
       setCustomer(response.data);
     } catch (error) {
       console.log(error);
@@ -26,7 +28,6 @@ export default function ExitVehicleForm(isSuccess: any) {
   const getTime = (jam_masuk: string, jam_keluar: string) => {
     if (jam_keluar) {
       const result = differenceInHours(jam_keluar, jam_masuk);
-      console.log(result);
 
       let biaya: number = 2000;
 
@@ -42,6 +43,47 @@ export default function ExitVehicleForm(isSuccess: any) {
     console.log(jam_keluar);
   };
 
+  const handleSubmit = async (data: any) => {
+    setInPayment(true);
+
+    // console.log("data customer", data);
+
+    const midtransData = {
+      name: "Biaya Parkir",
+      price: data.biaya,
+      quantity: 1,
+    };
+
+    // console.log("midtransData", midtransData);
+
+    const response = await createTransaction(midtransData);
+
+    console.log("response from midtrans", response);
+    if (response.status === 200) {
+      // Cookies.set("token", response.data.token);
+
+      if (window !== undefined) {
+        window.snap.pay(response.data.token);
+      }
+    }
+    // const response = await fetch("/api/tokenizer", {
+    //   method: "POST",
+    //   body: JSON.stringify(midtransData),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+
+    // if (response.ok) {
+    //   const result = await response.json();
+    //   console.log(result);
+
+    //   Cookies.set("token", result.token);
+    // }
+
+    setInPayment(false);
+  };
+
   const formik = useFormik({
     initialValues: {
       platNo: "",
@@ -49,16 +91,19 @@ export default function ExitVehicleForm(isSuccess: any) {
       jam_keluar: now,
     },
     onSubmit: async (values) => {
-      console.log(values.platNo);
-
       const response = await getUserByPlatNo({ plat_no: values.platNo });
       setCustomer(response.data);
-      console.log(customer);
 
-      const [{ jam_masuk }] = customer;
+      const [{ jam_masuk, biaya }] = customer;
+
+      // if (biaya !== 0 || biaya !== null) {
+      //   console.log("biaya sudah ada", biaya);
+      // }
+
       const newJamMasuk = format(jam_masuk, "yyyy-MM-dd HH:mm", { locale: id });
 
-      console.log(newJamMasuk);
+      // const biayaBaru = getTime(newJamMasuk, values.jam_keluar);
+      // console.log(biayaBaru);
 
       const data = {
         plat_no: values.platNo,
@@ -66,14 +111,19 @@ export default function ExitVehicleForm(isSuccess: any) {
         jam_keluar: values.jam_keluar,
       };
 
-      console.log(data);
+      // console.log("formik", data);
 
       if (values.platNo !== "") {
         try {
           await insertBiaya(data);
-          fetchCustomers();
-          if (window !== undefined) {
-            window.location.reload();
+          handleSubmit(data);
+          if (inPayment) {
+            fetchCustomers();
+            // if (!inPayment) {
+            //   if (window !== undefined) {
+            //     window.location.reload();
+            //   }
+            // }
           }
         } catch (error) {
           console.log(error);
@@ -83,6 +133,24 @@ export default function ExitVehicleForm(isSuccess: any) {
       //   formik.resetForm();
     },
   });
+
+  useEffect(() => {
+    const script = document.createElement("script");
+
+    script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+
+    script.async = true;
+    script.setAttribute(
+      "data-client-key",
+      `${process.env.NEXT_PUBLIC_CLIENT_KEY}`
+    );
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <form
@@ -112,6 +180,7 @@ export default function ExitVehicleForm(isSuccess: any) {
       <button
         type="submit"
         className="inline-flex justify-center py-2 px-4 border-2 border-primary text-xl font-medium rounded-md text-primary bg-white hover:bg-primary hover:text-white hover:border-white"
+        // onClick={() => handleSubmit(formik.values)}
       >
         Submit
       </button>

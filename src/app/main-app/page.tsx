@@ -10,6 +10,7 @@ import { id } from "date-fns/locale";
 import { useState } from "react";
 import VehicleEntryForm from "./components/VehicleEntryForm";
 import ExitVehicleForm from "./components/ExitVehicleForm";
+import Cookies from "js-cookie";
 
 export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
@@ -34,6 +35,18 @@ export default function Main() {
 
   useEffect(() => {
     fetchCustomers();
+
+    // const script = document.createElement("script");
+
+    // script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+
+    // script.async = true;
+
+    // document.body.appendChild(script);
+
+    // return () => {
+    //   document.body.removeChild(script);
+    // };
   }, []);
   return (
     <main className="flex min-h-screen flex-col bg-white items-center justify-between relative p-10">
