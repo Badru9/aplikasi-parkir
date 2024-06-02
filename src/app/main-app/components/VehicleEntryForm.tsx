@@ -22,10 +22,17 @@ export default function VehicleEntryForm() {
           jam_masuk: values.jamMasuk,
         };
 
-        await insertCustomer(data);
-        if (window !== undefined) {
-          window.location.reload();
+        const response = await insertCustomer(data);
+        console.log(response);
+
+        if (response.success) {
+          if (window !== undefined) {
+            window.location.reload();
+          }
+        } else {
+          console.log(response.message);
         }
+
         setEntrySuccess(true);
       } catch (error) {
         console.log(error);
@@ -38,7 +45,7 @@ export default function VehicleEntryForm() {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="space-y-4 bg-primary p-8 rounded-2xl"
+      className="space-y-4 bg-primary p-8 rounded-2xl w-full"
     >
       <h1 className="text-white text-2xl font-semibold">
         Form Kendaraan Masuk
@@ -56,7 +63,7 @@ export default function VehicleEntryForm() {
           id="platNo"
           value={formik.values.platNo}
           onChange={formik.handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl text-primary"
           required
         />
       </div>
@@ -73,7 +80,7 @@ export default function VehicleEntryForm() {
           id="jamMasuk"
           value={formik.values.jamMasuk}
           onChange={formik.handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl text-primary"
           required
         />
       </div>
@@ -83,11 +90,15 @@ export default function VehicleEntryForm() {
       >
         Submit
       </button>
-      <Toast
-        onShow={entrySuccess}
-        text="Data berhasil dimasukkan"
-        onClose={() => setEntrySuccess(false)}
-      />
+      {entrySuccess && (
+        <Toast
+          onShow={entrySuccess}
+          text={"Berhasil"}
+          onClose={() => {
+            setEntrySuccess(false);
+          }}
+        />
+      )}
     </form>
   );
 }

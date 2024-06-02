@@ -130,7 +130,7 @@ export default function ExitVehicleForm() {
         }
       }
 
-      //   formik.resetForm();
+      formik.resetForm();
     },
   });
 
@@ -155,7 +155,7 @@ export default function ExitVehicleForm() {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="space-y-4 bg-primary p-8 rounded-2xl"
+      className="space-y-4 w-full bg-primary p-8 rounded-2xl"
     >
       <h1 className="text-white text-2xl font-semibold">
         Form Kendaraan Keluar
@@ -173,7 +173,7 @@ export default function ExitVehicleForm() {
           id="platNo"
           value={formik.values.platNo}
           onChange={formik.handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl text-primary"
           required
         />
       </div>

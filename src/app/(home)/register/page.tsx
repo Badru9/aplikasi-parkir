@@ -101,7 +101,7 @@ export default function Register() {
     getListPegawai();
   }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center gap-20 p-20 relative">
+    <main className="flex min-h-screen flex-col items-center gap-20 p-0 py-10 lg:p-20 relative bg-lightGrey">
       {toastState && (
         <Toast
           text={text}
@@ -121,87 +121,87 @@ export default function Register() {
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-full min-h-[600px] gap-10 items-center justify-center rounded-[50px]"
       >
-        <div className="flex flex-col gap-3 w-1/2 px-20">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">
             Nama Lengkap
           </label>
           <input
             type="text"
             placeholder="Nama Lengkap"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
             name="nama"
             onChange={formik.handleChange}
             value={formik.values.nama}
             autoFocus
           />
         </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">
             Email
           </label>
           <input
             type="email"
             placeholder="Email"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
             name="email"
             onChange={formik.handleChange}
             value={formik.values.email}
           />
         </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">
             Username
           </label>
           <input
             type="text"
             placeholder="Username"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
             name="username"
             onChange={formik.handleChange}
             value={formik.values.username}
           />
         </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">
             Alamat Lengkap
           </label>
           <input
             type="text"
             placeholder="Alamat Lengkap"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
             name="alamat"
             onChange={formik.handleChange}
             value={formik.values.alamat}
           />
         </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">
             Tanggal Lahir
           </label>
           <input
             type="text"
             placeholder="Tanggal Lahir"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
             name="tanggal_lahir"
             onChange={formik.handleChange}
             value={formik.values.tanggal_lahir}
           />
         </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20 relative">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20 relative">
           <label className="text-2xl text-lightBlack font-semibold">
             Password
           </label>
           <input
             type={!showPassword ? "password" : "text"}
             placeholder="Password"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
             name="password"
             onChange={formik.handleChange}
             value={formik.values.password}
           />
           <button
             type="button"
-            className="absolute right-24 top-[47px]"
+            className="absolute right-24 top-[55px]"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
@@ -212,7 +212,7 @@ export default function Register() {
           </button>
         </div>
 
-        <div className="text-xl font-medium mt-5">
+        <div className="text-lg lg:text-xl font-medium mt-5 text-black">
           <p>
             Already have an account?{" "}
             <Link href={"/login"} className="font-semibold underline">
@@ -221,7 +221,7 @@ export default function Register() {
           </p>
         </div>
 
-        {loading ? <Loading /> : <Button children="Register" type="submit" />}
+        {loading ? <Loading /> : <Button type="submit">Register</Button>}
       </form>
     </main>
   );

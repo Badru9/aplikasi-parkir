@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import logo from "@/../public/logo-new.svg";
@@ -11,6 +12,7 @@ import { listPegawai } from "../../services/pegawai";
 import Toast from "../../components/Toast";
 import Loading from "@/app/components/Loading";
 import { useRouter } from "next/navigation";
+import { login } from "@/app/services/auth";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -36,56 +38,55 @@ export default function Login() {
 
   console.log(listDataPegawai);
 
-  const pegawaiUsername = listDataPegawai?.map((item) => {
-    return item.username;
-  });
-  const pegawaiPassword = listDataPegawai?.map((item) => {
-    return item.password;
-  });
-
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
     },
     onSubmit: async (values) => {
-      const isUsername = pegawaiUsername.find((item) => {
-        console.log(item);
-        return item === values.username;
-      });
+      setToastState(true);
 
-      const isPassword = pegawaiPassword.find((item) => {
-        return item === values.password;
-      });
+      const data = {
+        username: values.username,
+        password: values.password,
+      };
 
-      if (isUsername && isPassword) {
+      const loginPegawai = await login(data);
+
+      if (!loginPegawai.data.error) {
         setIsLoginSuccess(true);
         setLoading(true);
         setText("Login Berhasil");
         router.push("/main-app");
-        console.log("Login Berhasil");
+        console.log(loginPegawai.data.message);
+
+        setTimeout(() => {
+          setLoading(false);
+          setToastState(false);
+          router.push("/main-app");
+        }, 2000);
       } else if (values.username === "" || values.password === "") {
         setText("Username / Password Tidak Boleh Kosong");
         setIsLoginSuccess(false);
-      } else {
-        setIsLoginSuccess(false);
-        setText("Login Gagal");
-        console.log("Login Gagal");
-      }
-      setToastState(true);
-      setTimeout(() => {
         setLoading(false);
         setToastState(false);
-        router.push("/main-app");
-      }, 2000);
+      } else {
+        setIsLoginSuccess(false);
+        setText(loginPegawai.data.data);
+        setLoading(false);
+        setToastState(false);
+      }
+
+      formik.resetForm();
     },
   });
 
   useEffect(() => {
     getListPegawai();
   }, []);
+
   return (
-    <main className="flex h-screen flex-col items-center gap-10 py-40 relative overflow-y-hidden">
+    <main className="flex min-h-screen flex-col items-center gap-10 py-40 relative  bg-lightGrey text-lightBlack">
       {toastState && (
         <Toast
           text={text}
@@ -99,41 +100,41 @@ export default function Login() {
         alt="logo"
         width={1000}
         height={1000}
-        className="w-40"
+        className="lg:w-40 w-32"
       />
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col w-full h-[600px] gap-10 items-center justify-center rounded-[50px]"
+        className="flex flex-col w-full h-fit lg:h-[600px] gap-5 lg:gap-10 items-center justify-center rounded-[50px]"
       >
-        <div className="flex flex-col gap-3 w-1/2 px-20">
-          <label className="text-2xl text-lightBlack font-semibold">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
+          <label className="text-xl lg:text-2xl text-lightBlack font-semibold">
             Username
           </label>
           <input
             type="text"
             placeholder="Username"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 lg:text-xl text-lg"
             name="username"
             onChange={formik.handleChange}
             value={formik.values.username}
             autoFocus
           />
         </div>
-        <div className="flex flex-col gap-3 w-1/2 px-20 relative">
-          <label className="text-2xl text-lightBlack font-semibold">
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20 relative">
+          <label className="text-xl lg:text-2xl text-lightBlack font-semibold">
             Password
           </label>
           <input
             type={!showPassword ? "password" : "text"}
             placeholder="Password"
-            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-xl"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 lg:text-xl text-lg"
             name="password"
             onChange={formik.handleChange}
             value={formik.values.password}
           />
           <button
             type="button"
-            className="absolute right-24 top-[47px]"
+            className="absolute right-24 top-[55px]"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
@@ -143,21 +144,25 @@ export default function Login() {
             )}
           </button>
         </div>
-        <div className="text-xl font-medium mt-5 flex flex-col w-1/2 px-20">
+        <div className="lg:text-xl text-lg font-medium mt-2 lg:mt-5 flex flex-col w-full lg:w-1/2 px-20">
           <Link
             href={"/forgot-password"}
-            className="self-end hover:underline hover:font-medium"
+            className="lg:self-end self-center hover:underline hover:font-medium mb-2 lg:mb-0"
           >
             Forgot Password?
           </Link>
-          <p className="self-center">
+          <p className="lg:self-center flex">
             Doesn't have an account?{" "}
             <Link href={"/register"} className="font-semibold underline">
               Register
             </Link>
           </p>
         </div>
-        {loading ? <Loading /> : <Button children="Login" type="submit" />}
+        {loading ? (
+          <Loading color="black" />
+        ) : (
+          <Button type="submit">Login</Button>
+        )}
       </form>
     </main>
   );
