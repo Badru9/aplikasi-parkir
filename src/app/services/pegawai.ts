@@ -12,6 +12,18 @@ export async function listPegawai() {
   }
 }
 
+export async function getPegawaiByID(id: any) {
+  try {
+    const response = await axiosInstance.get(`/api/pegawai/${id}`);
+    console.log(response);
+    if (response.status === 200) {
+      return response.data.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function createPegawai(data: any) {
   const config = {
     headers: {

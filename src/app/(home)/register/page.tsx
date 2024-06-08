@@ -11,6 +11,7 @@ import { createPegawai, listPegawai } from "@/app/services/pegawai";
 import Toast from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/components/Loading";
+import Cookies from "js-cookie";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -79,6 +80,7 @@ export default function Register() {
           setTimeout(() => {
             setLoading(false);
           }, 2000);
+          Cookies.set("isLogin", "true");
         } catch (error) {
           console.log(error);
         }
@@ -93,12 +95,16 @@ export default function Register() {
         setText("Akun sudah terdaftar");
       }
       setToastState(true);
-      router.push("/main-app");
+      router.push("/login");
     },
   });
 
   useEffect(() => {
     getListPegawai();
+    const isLogin = Cookies.get("isLogin") === "true";
+    if (isLogin) {
+      router.push("/main-app");
+    }
   }, []);
   return (
     <main className="flex min-h-screen flex-col items-center gap-20 p-0 py-10 lg:p-20 relative bg-lightGrey">

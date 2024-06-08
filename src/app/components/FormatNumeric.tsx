@@ -6,7 +6,7 @@ export const FormatNumeric = ({ value }: Props) => {
   const currency = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
-    // trailingZeroDisplay: "stripIfInteger",
+    maximumFractionDigits: 0,
   });
   return currency.format(value);
 };

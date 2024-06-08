@@ -13,6 +13,7 @@ import Toast from "../../components/Toast";
 import Loading from "@/app/components/Loading";
 import { useRouter } from "next/navigation";
 import { login } from "@/app/services/auth";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -59,6 +60,7 @@ export default function Login() {
         setText("Login Berhasil");
         router.push("/main-app");
         console.log(loginPegawai.data.message);
+        Cookies.set("isLogin", "true");
 
         setTimeout(() => {
           setLoading(false);
@@ -83,6 +85,11 @@ export default function Login() {
 
   useEffect(() => {
     getListPegawai();
+
+    const isLogin = Cookies.get("isLogin");
+    if (isLogin === "true") {
+      router.push("/main-app");
+    }
   }, []);
 
   return (

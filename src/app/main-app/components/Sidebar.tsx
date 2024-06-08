@@ -1,9 +1,17 @@
 "use client";
 
-import { House, Gear, UserCircle, ListChecks } from "@phosphor-icons/react";
+import {
+  House,
+  Gear,
+  UserCircle,
+  ListChecks,
+  SignOut,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Cookies from "js-cookie";
+
 export default function Sidebar() {
   const [selected, setSelected] = useState<string>("");
 
@@ -23,14 +31,14 @@ export default function Sidebar() {
       icon: <ListChecks size={32} />,
     },
     {
-      name: "settings",
-      link: "/main-app/settings",
-      icon: <Gear size={32} />,
-    },
-    {
       name: "profile",
       link: "/main-app/profile",
       icon: <UserCircle size={32} />,
+    },
+    {
+      name: "logout",
+      link: "/",
+      icon: <SignOut size={32} />,
     },
   ];
 
@@ -43,7 +51,12 @@ export default function Sidebar() {
               key={menu.name}
               href={menu.link}
               className="flex items-center justify-center p-2 rounded-full hover:bg-white hover:text-primary cursor-pointer transition-all duration-200 ease-in-out"
-              onClick={() => setSelected(menu.name)}
+              onClick={() => {
+                setSelected(menu.name);
+                if (menu.name === "logout") {
+                  Cookies.set("isLogin", "false");
+                }
+              }}
             >
               {menu.icon}
             </Link>

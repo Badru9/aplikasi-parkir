@@ -78,7 +78,7 @@ export default function Main() {
                 <th className="py-1">Biaya</th>
               </tr>
             </thead>
-            <tbody className="w-full text-center">
+            <tbody>
               {customers.map((data, index) => (
                 <TableCustomers
                   key={index}

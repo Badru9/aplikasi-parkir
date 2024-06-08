@@ -9,7 +9,6 @@ import Cookies from "js-cookie";
 import { createTransaction } from "@/app/services/midtrans";
 
 export default function ExitVehicleForm() {
-  // TODO : Ketika insert biaya berhasil, fetch data customer kembali
   const [customer, setCustomer] = useState<any[]>([]);
   const [inPayment, setInPayment] = useState<boolean>(false);
 
@@ -87,7 +86,7 @@ export default function ExitVehicleForm() {
       const response = await getUserByPlatNo({ plat_no: values.platNo });
       setCustomer(response.data);
 
-      const [{ jam_masuk, biaya }] = customer;
+      const [{ jam_masuk }] = customer;
 
       // if (biaya !== 0 || biaya !== null) {
       //   console.log("biaya sudah ada", biaya);

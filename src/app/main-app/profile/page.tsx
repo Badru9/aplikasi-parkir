@@ -3,6 +3,7 @@
 import BackButton from "@/app/components/BackButton";
 import { useRouter } from "next/navigation";
 import Sidebar from "../components/Sidebar";
+import { listPegawai } from "@/app/services/pegawai";
 
 export default function Profile() {
   const router = useRouter();

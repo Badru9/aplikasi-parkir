@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import Image from "next/image";
@@ -10,14 +9,13 @@ import Button from "../components/Button";
 import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2000);
   }, []);
 
   return (
