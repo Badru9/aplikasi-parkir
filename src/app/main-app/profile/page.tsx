@@ -22,10 +22,10 @@ export default function Profile() {
   console.log(user);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white text-primary">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white text-primary overflow-x-hidden">
       <BackButton onClick={() => router.back()} />
       <Sidebar />
-      <div className="w-full min-h-screen ml-80 flex gap-20">
+      <div className="w-full ml-80 flex gap-20">
         <div className="w-fit items-center flex flex-col">
           {/* {image ? (
             <Image src={image} width={250} height={250} alt="image" />
