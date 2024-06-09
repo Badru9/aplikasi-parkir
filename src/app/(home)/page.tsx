@@ -19,12 +19,7 @@ export default function Home() {
   }, []);
 
   return (
-    <motion.main
-      initial={{ opacity: 0, y: -500 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, easings: "easeInOut" }}
-      className="w-full min-h-screen flex flex-col gap-20 items-center justify-center bg-lightGrey"
-    >
+    <main className="w-full min-h-screen flex flex-col gap-20 items-center justify-center bg-lightGrey">
       {loading ? (
         <Loading color="black" />
       ) : (
@@ -46,6 +41,6 @@ export default function Home() {
           </div>
         </>
       )}
-    </motion.main>
+    </main>
   );
 }

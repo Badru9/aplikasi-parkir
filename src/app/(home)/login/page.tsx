@@ -54,6 +54,8 @@ export default function Login() {
 
       const loginPegawai = await login(data);
 
+      Cookies.set("userData", JSON.stringify(loginPegawai.data.data));
+
       if (!loginPegawai.data.error) {
         setIsLoginSuccess(true);
         setLoading(true);
@@ -77,6 +79,7 @@ export default function Login() {
         setText(loginPegawai.data.data);
         setLoading(false);
         setToastState(false);
+        console.log("Gagal", loginPegawai.data.data);
       }
 
       formik.resetForm();
