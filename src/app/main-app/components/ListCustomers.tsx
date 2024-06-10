@@ -23,15 +23,15 @@ export default function TableCustomers({
   biaya,
 }: TableCustomersProps) {
   return (
-    <tr>
-      <td className="pb-1 pt-3">{index}</td>
-      <td className="pb-1 pt-3">{ID}</td>
-      <td className="pb-1 pt-3">{plat_no}</td>
-      <td className="pb-1 pt-3">{jam_masuk}</td>
-      <td className="pb-1 pt-3">
+    <tr className="w-full">
+      <td className="pb-1 pt-3 text-center">{index}</td>
+      <td className="pb-1 pt-3 text-center">{ID}</td>
+      <td className="pb-1 pt-3 text-center">{plat_no}</td>
+      <td className="pb-1 pt-3 text-center">{jam_masuk}</td>
+      <td className="pb-1 pt-3 text-center">
         {jam_keluar === undefined ? "NULL" : jam_keluar}
       </td>
-      <td className="pb-1 pt-3">
+      <td className="pb-1 pt-3 text-center">
         <FormatNumeric value={Number(biaya)} />
       </td>
     </tr>

@@ -39,7 +39,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between bg-white">
       <BackButton onClick={() => router.back()} />
       <Sidebar />
-      <div className="flex flex-col gap-5 items-center w-full p-10 pl-40">
+      <div className="flex flex-col gap-5 items-center w-full p-10 pl-44">
         <h1 className="text-3xl font-semibold text-black">Data Customers</h1>
         <table className="w-full">
           <thead>

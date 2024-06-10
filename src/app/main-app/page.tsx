@@ -12,11 +12,14 @@ import VehicleEntryForm from "./components/VehicleEntryForm";
 import ExitVehicleForm from "./components/ExitVehicleForm";
 import Cookies from "js-cookie";
 import Ticket from "./components/Ticket";
+import { useRouter } from "next/navigation";
 
 export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [vehicleOut, setVehicleOut] = useState<boolean>(false);
   const [dataCustomer, setDataCustomer] = useState<string>("");
+
+  const router = useRouter();
 
   const fetchCustomers = async () => {
     try {
@@ -43,20 +46,14 @@ export default function Main() {
     setVehicleOut(true);
   };
 
+  const cookies = Cookies.get("isLogin");
+
   useEffect(() => {
     fetchCustomers();
 
-    // const script = document.createElement("script");
-
-    // script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
-
-    // script.async = true;
-
-    // document.body.appendChild(script);
-
-    // return () => {
-    //   document.body.removeChild(script);
-    // };
+    if (cookies !== "true") {
+      router.push("/login");
+    }
   }, []);
   return (
     <main className="flex min-h-screen w-full flex-col bg-lightGrey items-center justify-between relative p-10">
