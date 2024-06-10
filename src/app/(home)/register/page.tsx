@@ -110,7 +110,7 @@ export default function Register() {
     <main className="flex min-h-screen flex-col items-center gap-20 p-0 py-10 lg:p-20 relative bg-lightGrey">
       {toastState && (
         <Toast
-          text={text}
+          text={text || "Gagal Register"}
           state={isRegisterSuccess}
           onClose={() => setToastState(false)}
           onShow={toastState}

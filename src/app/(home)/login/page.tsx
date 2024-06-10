@@ -99,7 +99,7 @@ export default function Login() {
     <main className="flex min-h-screen flex-col items-center gap-10 py-40 relative  bg-lightGrey text-lightBlack">
       {toastState && (
         <Toast
-          text={text}
+          text={text || "Gagal Login"}
           state={isLoginSuccess}
           onClose={() => setToastState(false)}
           onShow={toastState}
