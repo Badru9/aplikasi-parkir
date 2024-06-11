@@ -21,7 +21,9 @@ const BackButton = dynamic(() => import("@/app/components/BackButton"), {
 
 export default function Profile() {
   // const [image, setImage] = useState<string>("");
-  const [user, setUser] = useState<any[]>([]);
+  const [user, setUser] = useState<any>({});
+
+  console.log(user);
 
   // console.log(image);
 
@@ -69,6 +71,10 @@ export default function Profile() {
                   {item?.username} | {item?.email}
                 </p>
                 {/* <p className="text-xl font-semibold">{item?.username}</p> */}
+                <div className="flex flex-col my-5">
+                  <h3 className="text-primary/60">Role</h3>
+                  <p className="text-xl font-semibold">{item?.role}</p>
+                </div>
                 <div className="flex flex-col my-5">
                   <h3 className="text-primary/60">Alamat</h3>
                   <p className="text-xl font-semibold">{item?.alamat}</p>

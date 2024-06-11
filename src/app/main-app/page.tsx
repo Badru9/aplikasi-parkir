@@ -18,6 +18,11 @@ export default function Main() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [vehicleOut, setVehicleOut] = useState<boolean>(false);
   const [dataCustomer, setDataCustomer] = useState<string>("");
+  const [user, setUser] = useState<any[]>([]);
+  const [role, setRole] = useState<string>("");
+
+  console.log(user);
+  console.log(role);
 
   const router = useRouter();
 
@@ -47,6 +52,7 @@ export default function Main() {
   };
 
   const cookies = Cookies.get("isLogin");
+  const userCookies = Cookies.get("userData");
 
   useEffect(() => {
     fetchCustomers();
@@ -54,15 +60,31 @@ export default function Main() {
     if (cookies !== "true") {
       router.push("/login");
     }
+
+    if (userCookies) {
+      const userData = JSON.parse(userCookies as string);
+      console.log(userData);
+      setUser(userData);
+
+      const user = userData.find((item: any) => {
+        return {
+          role: item.role,
+        };
+      });
+
+      setRole(user.role);
+    }
   }, []);
   return (
     <main className="flex min-h-screen w-full flex-col bg-lightGrey items-center justify-between relative p-10">
       <Sidebar />
       <div className="flex lg:flex-col w-full pl-40 py-10 text-xl gap-10">
-        <div className="gap-10 flex flex-col lg:flex-row w-full">
-          <VehicleEntryForm />
-          <ExitVehicleForm />
-        </div>
+        {role !== "" && role !== "Super Admin" && (
+          <div className="gap-10 flex flex-col lg:flex-row w-full">
+            <VehicleEntryForm />
+            <ExitVehicleForm />
+          </div>
+        )}
         <div className="p-8 bg-primary text-white rounded-2xl w-1/2 lg:w-full">
           <table className="w-full">
             <thead>

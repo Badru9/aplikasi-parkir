@@ -8,7 +8,8 @@ export interface Vehicle {
 
 export interface Pegawai {
   id?: number;
-  name: string;
+  role?: string;
+  nama: string;
   alamat: string;
   username: string;
   tanggal_lahir: string;

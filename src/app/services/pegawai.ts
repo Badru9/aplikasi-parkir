@@ -1,8 +1,11 @@
-import { axiosInstance } from "../lib/axiosInstance";
+import axios from "axios";
+
+const BASEURL = process.env.NEXT_PUBLIC_API;
 
 export async function listPegawai() {
   try {
-    const response = await axiosInstance.get("/api/pegawai");
+    const url = `${BASEURL}/api/pegawai`;
+    const response = await axios.get(url);
     console.log(response);
     if (response.status === 200) {
       return response.data.data;
@@ -14,7 +17,7 @@ export async function listPegawai() {
 
 export async function getPegawaiByID(id: any) {
   try {
-    const response = await axiosInstance.get(`/api/pegawai/${id}`);
+    const response = await axios.get(`${BASEURL}/api/pegawai/${id}`);
     console.log(response);
     if (response.status === 200) {
       return response.data.data;
@@ -30,9 +33,30 @@ export async function createPegawai(data: any) {
       "Content-Type": "application/json",
     },
   };
+
+  const url = `${BASEURL}/api/pegawai`;
+
   try {
     console.log(data);
-    const response = await axiosInstance.post("/api/pegawai", data, config);
+    const response = await axios.post(url, data, config);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function updatePegawai(data: any) {
+  try {
+    const response = await axios.put(`${BASEURL}/api/pegawai`, data);
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deletePegawai(id: any) {
+  try {
+    const response = await axios.delete(`${BASEURL}/api/pegawai/${id}`);
     console.log(response);
   } catch (error) {
     console.log(error);

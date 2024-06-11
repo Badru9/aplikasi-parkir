@@ -1,7 +1,12 @@
 import { axiosInstance } from "../lib/axiosInstance";
+import axios from "axios";
+
+const BASEURL = process.env.NEXT_PUBLIC_API;
 
 export async function createTransaction(parameter: any) {
-  const response = await axiosInstance.post(`/api/transaction`, parameter);
+  const url = `${BASEURL}/api/transaction`;
+
+  const response = await axios.post(url, parameter);
 
   return response;
 

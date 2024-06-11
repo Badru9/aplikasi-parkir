@@ -12,6 +12,7 @@ import Toast from "@/app/components/Toast";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/components/Loading";
 import Cookies from "js-cookie";
+import { CaretDown } from "@phosphor-icons/react";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -20,6 +21,7 @@ export default function Register() {
   const [isRegisterSuccess, setIsRegisterSuccess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const [role, setRole] = useState<string>("");
 
   const router = useRouter();
 
@@ -52,6 +54,7 @@ export default function Register() {
       });
 
       if (
+        role === "" ||
         values.nama === "" ||
         values.email === "" ||
         values.alamat === "" ||
@@ -67,6 +70,7 @@ export default function Register() {
 
       const handleCreate = async () => {
         const data = {
+          role,
           nama: values.nama,
           alamat: values.alamat,
           email: values.email,
@@ -127,6 +131,35 @@ export default function Register() {
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-full min-h-[600px] gap-10 items-center justify-center rounded-[50px]"
       >
+        <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
+          <label className="text-2xl text-lightBlack font-semibold">Role</label>
+          {/* <input
+            type="text"
+            placeholder="Nama Lengkap"
+            className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
+            name="nama"
+            onChange={formik.handleChange}
+            value={formik.values.nama}
+            autoFocus
+          /> */}
+          <div className="w-full relative">
+            <select
+              name="role"
+              className="w-full appearance-none py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 text-lg lg:text-xl"
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="Select Role" disabled>
+                Select Role
+              </option>
+              <option value="Operator">Operator</option>
+              <option value="Super Admin">Super Admin</option>
+            </select>
+            <CaretDown
+              size={24}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white"
+            />
+          </div>
+        </div>
         <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">
             Nama Lengkap
