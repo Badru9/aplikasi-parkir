@@ -37,56 +37,56 @@ export default function FormEdit({ data, setFormEdit }: any) {
     <div className="flex items-center justify-center gap-3 w-full h-full bg-black/30 fixed overflow-hidden">
       <div className="flex flex-col w-1/2 items-center justify-center gap-3 bg-white p-10 rounded-2xl shadow-md">
         <div className="space-y-5 w-full">
-          <h1>
+          <p className="text-xl text-black">
             Edit{" "}
             <span className="text-primary font-semibold">{data.nama} </span>
             Data
-          </h1>
+          </p>
           <form className="flex flex-col gap-3 w-full">
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
             />
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Alamat"
               value={alamat}
               onChange={(e) => setAlamat(e.target.value)}
             />
             <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Tanggal Lahir"
               value={tanggalLahir}

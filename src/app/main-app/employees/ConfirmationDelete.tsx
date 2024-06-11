@@ -15,7 +15,7 @@ export default function ConfirmationDialog({ data, setOpen }: any) {
   return (
     <div className="flex items-center justify-center gap-3 w-full h-full bg-black/30 fixed overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-3 bg-white p-10 rounded-2xl shadow-md">
-        <p>
+        <p className="text-xl text-black">
           Are you sure want to delete{" "}
           <span className="text-primary font-semibold">{data.nama}</span>?
         </p>

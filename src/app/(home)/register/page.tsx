@@ -84,7 +84,6 @@ export default function Register() {
           setTimeout(() => {
             setLoading(false);
           }, 2000);
-          Cookies.set("isLogin", "true");
         } catch (error) {
           console.log(error);
         }
@@ -111,7 +110,7 @@ export default function Register() {
     }
   }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center gap-20 p-0 py-10 lg:p-20 relative bg-lightGrey">
+    <main className="flex min-h-screen flex-col items-center gap-20 p-0 py-10 relative bg-lightGrey">
       {toastState && (
         <Toast
           text={text || "Gagal Register"}
@@ -129,7 +128,7 @@ export default function Register() {
       />
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col w-full min-h-[600px] gap-10 items-center justify-center rounded-[50px]"
+        className="flex flex-col w-full min-h-[600px] gap-10 items-center justify-center"
       >
         <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-2xl text-lightBlack font-semibold">Role</label>
