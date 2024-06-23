@@ -8,19 +8,21 @@ export default function VehicleEntryForm() {
 
   const formik = useFormik({
     initialValues: {
-      platNo: "",
-      jamMasuk: "",
+      licensePlate: "",
+      timeIn: "",
     },
     onSubmit: async (values) => {
-      console.log(values.platNo);
+      console.log(values.licensePlate);
 
-      console.log(values.jamMasuk);
+      console.log(values.timeIn);
 
       try {
         const data = {
-          plat_no: values.platNo,
-          jam_masuk: values.jamMasuk,
+          licensePlate: values.licensePlate,
+          timeIn: new Date(values.timeIn).toISOString(),
         };
+
+        console.log("jalan");
 
         const response = await insertCustomer(data);
         console.log(response);
@@ -51,17 +53,13 @@ export default function VehicleEntryForm() {
         Form Kendaraan Masuk
       </h1>
       <div>
-        <label
-          htmlFor="platNo"
-          className="block text-xl font-medium text-white"
-        >
+        <label className="block text-xl font-medium text-white">
           Plat Nomor
         </label>
         <input
           type="text"
-          name="platNo"
-          id="platNo"
-          value={formik.values.platNo}
+          name="licensePlate"
+          value={formik.values.licensePlate}
           onChange={formik.handleChange}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl text-primary"
           required
@@ -76,9 +74,8 @@ export default function VehicleEntryForm() {
         </label>
         <input
           type="datetime-local"
-          name="jamMasuk"
-          id="jamMasuk"
-          value={formik.values.jamMasuk}
+          name="timeIn"
+          value={formik.values.timeIn}
           onChange={formik.handleChange}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-xl text-primary"
           required

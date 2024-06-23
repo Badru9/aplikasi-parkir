@@ -20,7 +20,7 @@ export default function Home() {
   const fetchUsers = async () => {
     const response = await listUsers();
     console.log(response);
-    setUsers(response.data);
+    setUsers(response);
   };
 
   const formatDate = (data: any) => {
@@ -64,16 +64,16 @@ export default function Home() {
                   {user.id}
                 </td>
                 <td className="text-primary text-center border border-primary text-lg py-1">
-                  {user.plat_no}
+                  {user.licensePlate}
                 </td>
                 <td className="text-primary text-center border border-primary text-lg py-1">
-                  {formatDate(user.jam_masuk)}
+                  {formatDate(user.timeIn)}
                 </td>
                 <td className="text-primary text-center border border-primary text-lg py-1">
-                  {formatDate(user.jam_keluar)}
+                  {formatDate(user.timeOut)}
                 </td>
                 <td className="text-primary text-center border border-primary text-lg py-1">
-                  <FormatNumeric value={user.biaya || 0} />
+                  <FormatNumeric value={user.cost || 0} />
                 </td>
               </tr>
             ))}

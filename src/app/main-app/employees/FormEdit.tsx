@@ -4,31 +4,27 @@ import { updatePegawai } from "@/app/services/pegawai";
 import { useState } from "react";
 
 export default function FormEdit({ data, setFormEdit }: any) {
-  const [name, setName] = useState<string>(data.nama || "");
+  const [name, setName] = useState<string>(data.name || "");
   const [username, setUsername] = useState<string>(data.username || "");
   const [email, setEmail] = useState<string>(data.email || "");
-  const [role, setRole] = useState<string>(data.role || "");
-  const [alamat, setAlamat] = useState<string>(data.alamat || "");
-  const [tanggalLahir, setTanggalLahir] = useState<string>(
-    data.tanggal_lahir || ""
-  );
+  const [role, setRole] = useState<any>(data.role || "");
   const [password, setPassword] = useState<string>(data.password || "");
 
   const handleEdit = async () => {
     const newData = {
-      id: data.id,
-      role: role || data.role,
-      nama: name || data.nama,
+      // id: data.id,
+      name: name || data.name,
       username: username || data.username,
       password: password || data.password,
-      alamat: alamat || data.alamat,
       email: email || data.email,
-      tanggal_lahir: tanggalLahir || data.tanggal_lahir,
+      role: role || data.role.name,
     };
+
+    console.log(newData);
 
     setFormEdit(false);
 
-    await updatePegawai(newData);
+    await updatePegawai(data.id, newData);
 
     if (window !== undefined) window.location.reload();
   };
@@ -71,26 +67,25 @@ export default function FormEdit({ data, setFormEdit }: any) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {/* <select
+              name="role"
+              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black appearance-none"
+              onChange={(e) => setRole(e.target.value)}
+              value={role}
+            >
+              <option value="Select Role" disabled>
+                Select Role
+              </option>
+              <option value="Super Visor">Super Visor</option>
+              <option value="Operator">Operator</option>
+            </select> */}
             <input
               className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
               type="text"
               placeholder="Role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            />
-            <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
-              type="text"
-              placeholder="Alamat"
-              value={alamat}
-              onChange={(e) => setAlamat(e.target.value)}
-            />
-            <input
-              className="w-full border-2 border-gray-300 rounded-full py-1 px-3 text-black"
-              type="text"
-              placeholder="Tanggal Lahir"
-              value={tanggalLahir}
-              onChange={(e) => setTanggalLahir(e.target.value)}
+              value={role.name || data.role.name}
+              // onChange={(e) => setRole(e.target.value)}
+              disabled
             />
           </form>
         </div>

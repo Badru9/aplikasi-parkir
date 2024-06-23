@@ -7,32 +7,29 @@ import { id } from "date-fns/locale";
 
 interface TableCustomersProps {
   index: number;
-  ID: any;
-  plat_no: string;
-  jam_masuk: any;
-  jam_keluar: any;
-  biaya: string;
+  licensePlate: string;
+  timeIn: any;
+  timeOut: any;
+  cost: string;
 }
 
 export default function TableCustomers({
   index,
-  ID,
-  plat_no,
-  jam_masuk,
-  jam_keluar,
-  biaya,
+  licensePlate,
+  timeIn,
+  timeOut,
+  cost,
 }: TableCustomersProps) {
   return (
     <tr className="w-full">
       <td className="pb-1 pt-3 text-center">{index}</td>
-      <td className="pb-1 pt-3 text-center">{ID}</td>
-      <td className="pb-1 pt-3 text-center">{plat_no}</td>
-      <td className="pb-1 pt-3 text-center">{jam_masuk}</td>
+      <td className="pb-1 pt-3 text-center">{licensePlate}</td>
+      <td className="pb-1 pt-3 text-center">{timeIn}</td>
       <td className="pb-1 pt-3 text-center">
-        {jam_keluar === undefined ? "NULL" : jam_keluar}
+        {timeOut === undefined ? "NULL" : timeOut}
       </td>
       <td className="pb-1 pt-3 text-center">
-        <FormatNumeric value={Number(biaya)} />
+        <FormatNumeric value={Number(cost)} />
       </td>
     </tr>
   );

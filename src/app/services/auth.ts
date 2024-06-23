@@ -7,7 +7,7 @@ export async function login(data: any) {
   console.log(data);
   console.log(BASEURL);
 
-  const url = `${BASEURL}/api/login-pegawai`;
+  const url = `${BASEURL}/api/login`;
 
   const response = await axios.post(url, data);
   console.log(response);

@@ -30,7 +30,7 @@ export default function Main() {
     try {
       const response = await listUsers();
       console.log(response);
-      setCustomers(response.data);
+      setCustomers(response);
     } catch (error) {
       console.log(error);
     }
@@ -66,20 +66,15 @@ export default function Main() {
       console.log(userData);
       setUser(userData);
 
-      const user = userData.find((item: any) => {
-        return {
-          role: item.role,
-        };
-      });
-
-      setRole(user.role);
+      setRole(userData.role.name);
     }
   }, []);
+
   return (
     <main className="flex min-h-screen w-full flex-col bg-lightGrey items-center justify-between relative p-10">
       <Sidebar />
       <div className="flex lg:flex-col w-full pl-40 py-10 text-xl gap-10">
-        {role !== "" && role !== "Super Admin" && (
+        {role !== "" && role !== "Super Admin" && role !== "Owner" && (
           <div className="gap-10 flex flex-col lg:flex-row w-full">
             <VehicleEntryForm />
             <ExitVehicleForm />
@@ -90,7 +85,6 @@ export default function Main() {
             <thead>
               <tr className="border-y border-white">
                 <th className="py-1">No</th>
-                <th className="py-1">ID</th>
                 <th className="py-1">Plat Nomor</th>
                 <th className="py-1">Jam Masuk</th>
                 <th className="py-1">Jam Keluar</th>
@@ -98,15 +92,14 @@ export default function Main() {
               </tr>
             </thead>
             <tbody>
-              {customers.map((data, index) => (
+              {customers?.map((data, index) => (
                 <TableCustomers
                   key={index}
                   index={index + 1}
-                  ID={data.id}
-                  plat_no={data.plat_no}
-                  jam_masuk={formatDate(data.jam_masuk)}
-                  jam_keluar={formatDate(data.jam_keluar)}
-                  biaya={data.biaya}
+                  licensePlate={data.licensePlate}
+                  timeIn={formatDate(data.timeIn)}
+                  timeOut={formatDate(data.timeOut)}
+                  cost={data.cost}
                 />
               ))}
             </tbody>

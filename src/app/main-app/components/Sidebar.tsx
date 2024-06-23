@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
 export default function Sidebar() {
   const [selected, setSelected] = useState<string>("");
   const [menu, setMenu] = useState<any[]>([]);
-  const [userRole, setUserRole] = useState<string>("");
+  // const [role, setRole] = useState<string>("");
 
   console.log(selected);
 
@@ -72,24 +72,25 @@ export default function Sidebar() {
     },
   ];
 
-  // const dataMenus =
-
   useEffect(() => {
     const userData = JSON.parse(Cookies.get("userData") as string);
 
     console.log(userData);
 
-    const user = userData.find((item: any) => {
-      return { role: item.role };
-    });
+    if (userData) {
+      // setRole(userData.role.name);
 
-    console.log(user);
-
-    if (user?.role === "Super Admin") {
-      setMenu(adminMenus);
-    } else {
-      setMenu(menus);
+      if (
+        userData.role.name === "Super Admin" ||
+        userData.role.name === "Owner"
+      ) {
+        setMenu(adminMenus);
+      } else {
+        setMenu(menus);
+      }
     }
+
+    //   console.log(user);
   }, []);
 
   return (

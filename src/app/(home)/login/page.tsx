@@ -41,18 +41,19 @@ export default function Login() {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     onSubmit: async (values) => {
       setToastState(true);
 
       const data = {
-        username: values.username,
+        email: values.email,
         password: values.password,
       };
 
       const loginPegawai = await login(data);
+      console.log(loginPegawai);
 
       Cookies.set("userData", JSON.stringify(loginPegawai.data.data));
 
@@ -68,9 +69,9 @@ export default function Login() {
           setLoading(false);
           setToastState(false);
           router.push("/main-app");
-        }, 2000);
-      } else if (values.username === "" || values.password === "") {
-        setText("Username / Password Tidak Boleh Kosong");
+        }, 3000);
+      } else if (values.email === "" || values.password === "") {
+        setText("Email / Password Tidak Boleh Kosong");
         setIsLoginSuccess(false);
         setLoading(false);
         setToastState(false);
@@ -118,15 +119,15 @@ export default function Login() {
       >
         <div className="flex flex-col gap-3 w-full lg:w-1/2 px-20">
           <label className="text-xl lg:text-2xl text-lightBlack font-semibold">
-            Username
+            Email
           </label>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Email"
             className="w-full py-2 px-5 ml-3 rounded-full ring-0 outline-none bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 lg:text-xl text-lg"
-            name="username"
+            name="email"
             onChange={formik.handleChange}
-            value={formik.values.username}
+            value={formik.values.email}
             autoFocus
           />
         </div>

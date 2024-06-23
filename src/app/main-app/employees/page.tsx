@@ -17,7 +17,9 @@ import FormEdit from "./FormEdit";
 
 export default function Employees() {
   const [users, setUsers] = useState<any[]>([]);
-  const [editData, setEditData] = useState<any>();
+  const [editData, setEditData] = useState<any[]>([]);
+
+  console.log(users);
 
   const [open, setOpen] = useState<boolean>(false);
   const [formEdit, setFormEdit] = useState<boolean>(false);
@@ -27,18 +29,22 @@ export default function Employees() {
   const fetchEmployees = async () => {
     const response = await listPegawai();
     console.log(response);
+    if (response) {
+      const filteredEmployees = response?.filter((employee: any) => {
+        return (
+          employee?.role.name !== "Super Admin" &&
+          employee?.role.name !== "Owner"
+        );
+      });
 
-    const filteredEmployees = response.filter(
-      (employee: any) => employee.role !== "Super Admin"
-    );
+      console.log(filteredEmployees);
 
-    console.log(filteredEmployees);
-
-    setUsers(filteredEmployees);
+      setUsers(filteredEmployees);
+    }
   };
 
   const handleEdit = (data: any) => {
-    console.log(data);
+    console.log(data, id);
     setEditData(data);
     setFormEdit(true);
   };
@@ -73,9 +79,7 @@ export default function Employees() {
               <th className="py-1 border border-primary text-primary">
                 Password
               </th>
-              <th className="py-1 border border-primary text-primary">
-                Tanggal Lahir
-              </th>
+
               <th className="py-1 border border-primary text-primary">
                 Action
               </th>
@@ -84,28 +88,26 @@ export default function Employees() {
           <tbody>
             {users?.map((user: Pegawai) => (
               <tr key={user.id}>
-                <td className="text-primary text-center border border-primary text-lg py-2">
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
                   {user.id}
                 </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
-                  {user.nama}
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
+                  {user.name}
                 </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
-                  {user.role}
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
+                  {user?.role?.name}
                 </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
                   {user.email}
                 </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
                   {user.username}
                 </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
                   {user.password}
                 </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
-                  {user.tanggal_lahir}
-                </td>
-                <td className="text-primary text-center border border-primary text-lg py-2">
+
+                <td className="text-primary text-center border border-primary text-lg py-2 px-2">
                   <div className="flex gap-2 items-center justify-center">
                     <button
                       className="bg-green-500 text-white py-0.5 px-5 rounded-full"
