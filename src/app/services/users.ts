@@ -2,10 +2,10 @@ import axios from "axios";
 
 const BASEURL = process.env.NEXT_PUBLIC_API;
 
-export async function listUsers() {
-  const url = `${BASEURL}/api/customers`;
-
-  const response = await axios.get(url);
+export async function listUsers(trash?: number) {
+  const response = await axios.get(
+    `${BASEURL}/api/customers?trash=${trash ?? 0}`
+  );
 
   console.log(response);
 
@@ -14,12 +14,12 @@ export async function listUsers() {
   }
 }
 
-export async function getUserByPlatNo(data: any) {
-  const response = await axios.get(`${BASEURL}/api/customers/${data.plat_no}`);
+export async function getUserByLicensePlate(data: any) {
+  const response = await axios.get(
+    `${BASEURL}/api/customers?licensePlate=${data.licensePlate}`
+  );
 
-  // console.log(data);
-
-  // console.log(response);
+  console.log(response);
 
   if (response) {
     return response.data;
@@ -43,4 +43,13 @@ export async function insertCustomer(data: any) {
   if (response.status === 201) {
     return response.data;
   }
+}
+
+export async function deleteCustomer(data: any) {
+  const response = await axios.delete(
+    `${BASEURL}/api/customers?licensePlate=${data.licensePlate}`
+  );
+  console.log(response);
+
+  return response;
 }

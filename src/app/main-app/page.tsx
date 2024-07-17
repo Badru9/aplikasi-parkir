@@ -28,7 +28,7 @@ export default function Main() {
 
   const fetchCustomers = async () => {
     try {
-      const response = await listUsers();
+      const response = await listUsers(0);
       console.log(response);
       setCustomers(response);
     } catch (error) {

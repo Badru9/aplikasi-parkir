@@ -18,7 +18,7 @@ export default function Home() {
   const router = useRouter();
 
   const fetchUsers = async () => {
-    const response = await listUsers();
+    const response = await listUsers(1);
     console.log(response);
     setUsers(response);
   };

@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={urbanist.className}>
-        <NextTopLoader />
+        <NextTopLoader showSpinner={false} />
         {children}
       </body>
     </html>
